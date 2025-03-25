@@ -31,7 +31,7 @@ const closeButton = document.getElementById('close-button');
 let score = document.getElementById('score');
 
 githubButton.addEventListener('click', () => {
-    window.open('https://github.com/montavictor', '_blank');
+    window.open('https://github.com/Montavictor/Project-6-Tictactoe', '_blank');
 });
 
 closeButton.addEventListener('click', ()=> {
