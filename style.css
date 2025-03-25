@@ -2,7 +2,11 @@
     --debug: 2px solid red;
     --dark-color: #9f974a;
 }
-
+*{
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
 body {
     text-align: center;
     background: linear-gradient(to bottom, #560a89, #a442ff);
