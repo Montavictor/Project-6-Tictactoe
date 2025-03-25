@@ -64,7 +64,7 @@ function createBoard() {
             if (isPlayerturn) {
                 addMove(squareID, i);
             }
-            if (!isPlayerturn) {
+            if (!isPlayerturn && !checkWin(gameBoard)) {
                 //show "computer is thinking"
                 overlay.classList.remove('hidden');
                 setTimeout(() => {
@@ -102,7 +102,7 @@ const addComputerMove = () => {
             emptyGrid.push(i);
         }
     }
-    if (!isPlayerturn) {
+    if (!isPlayerturn && !checkWin(gameBoard)) {
         if (emptyGrid.length > 0) {
             let random = Math.floor(Math.random() * emptyGrid.length);
             let randomGrid = document.getElementById(`box${emptyGrid[random]}`);
@@ -132,6 +132,7 @@ function updateBoard(element, boxNumber) {
 
     let winner = checkWin(gameBoard);
     if (winner) {
+        overlay.classList.remove('hidden');
         if (winner === playerX) {
             winnerContainer.classList.remove('hidden');
             winnerDiv.textContent = "Winner: Player!!";
@@ -151,6 +152,7 @@ function updateBoard(element, boxNumber) {
         console.log("It's a draw!");
         buttonContainer.classList.remove('hidden');
         score.textContent = `${playerScore} - ${computerScore}`;
+        overlay.classList.remove('hidden');
     }
     updateState(gameBoard);
 }
@@ -243,7 +245,7 @@ next.addEventListener("click", () => {
         prev.style.pointerEvents = "auto";
         prev.classList.remove('cursor');    
     
-    if (stateTracker < state.length) {
+    if (stateTracker < state.length - 1) {
         stateTracker++;
         reflectBoard(stateTracker);
         console.log(stateTracker)
@@ -276,6 +278,7 @@ reset.addEventListener('click', () => {
     choose.classList.remove('hidden');
     buttonContainer.classList.add('hidden');
     winnerDiv.textContent = '';
+    overlay.classList.add('hidden');
 });
 
 
