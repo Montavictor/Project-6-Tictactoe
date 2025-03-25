@@ -29,26 +29,32 @@ const githubButton = document.getElementById('github-button');
 const winnerContainer = document.getElementById('winner-container');
 const closeButton = document.getElementById('close-button');
 let score = document.getElementById('score');
+const loader = document.getElementById('loader');
 
 githubButton.addEventListener('click', () => {
     window.open('https://github.com/Montavictor/Project-6-Tictactoe', '_blank');
 });
 
-closeButton.addEventListener('click', ()=> {
+closeButton.addEventListener('click', () => {
     winnerContainer.classList.add('hidden');
 })
 
 oButton.addEventListener('click', () => {
     playerX = 'O';
     choiceContainer.classList.add('hidden');
-    container.classList.remove('hidden');
+    setTimeout(() => {
+        container.classList.remove('hidden');
+    }, 500);
+
 
 });
 
 xButton.addEventListener('click', () => {
     playerX = 'X'
     choiceContainer.classList.add('hidden');
-    container.classList.remove('hidden');
+    setTimeout(() => {
+        container.classList.remove('hidden');
+    }, 500);
 
 });
 
@@ -71,7 +77,7 @@ function createBoard() {
                     addComputerMove();
                     overlay.classList.add('hidden');
                     // add styling
-                }, 1500);
+                }, 1000);
             }
         });
     }
@@ -137,12 +143,14 @@ function updateBoard(element, boxNumber) {
             winnerContainer.classList.remove('hidden');
             winnerDiv.textContent = "Winner: Player!!";
             buttonContainer.classList.remove('hidden');
+            loader.classList.add('hidden');
             playerScore++;
             score.textContent = `${playerScore} - ${computerScore}`;
         } else {
             winnerContainer.classList.remove('hidden');
             buttonContainer.classList.remove('hidden');
             winnerDiv.textContent = "Winner: Computer!!";
+            loader.classList.add('hidden');
             computerScore++;
             score.textContent = `${playerScore} - ${computerScore}`;
         }
@@ -153,6 +161,7 @@ function updateBoard(element, boxNumber) {
         buttonContainer.classList.remove('hidden');
         score.textContent = `${playerScore} - ${computerScore}`;
         overlay.classList.remove('hidden');
+        loader.classList.add('hidden');
     }
     updateState(gameBoard);
 }
@@ -235,16 +244,16 @@ prev.addEventListener("click", () => {
         prev.disabled = true;
         prev.classList.remove('pointer');
         prev.style.pointerEvents = "none";
-        prev.classList.add('cursor');    
+        prev.classList.add('cursor');
     }
 });
 
 next.addEventListener("click", () => {
-        prev.disabled = false;
-        prev.classList.add('pointer');
-        prev.style.pointerEvents = "auto";
-        prev.classList.remove('cursor');    
-    
+    prev.disabled = false;
+    prev.classList.add('pointer');
+    prev.style.pointerEvents = "auto";
+    prev.classList.remove('cursor');
+
     if (stateTracker < state.length - 1) {
         stateTracker++;
         reflectBoard(stateTracker);
@@ -259,26 +268,32 @@ next.addEventListener("click", () => {
 });
 
 reset.addEventListener('click', () => {
-    state = [];
-    gameBoard = [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', '']
-    ];
-    moves = 0;
-    for (let i = 0; i < 9; i++) {
-        const square = document.getElementById(`box${i}`);
-        square.textContent = '';
-        square.classList.remove('winDiagonalReverse', 'winDiagonal', 'win', 'winVertical');
-        square.classList.add('pointer');
-        square.style.pointerEvents = 'auto';
-    }
-    winnerContainer.classList.add('hidden');
     container.classList.add('hidden');
-    choose.classList.remove('hidden');
-    buttonContainer.classList.add('hidden');
-    winnerDiv.textContent = '';
-    overlay.classList.add('hidden');
+    setTimeout(() => {
+        state = [];
+        gameBoard = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ];
+        moves = 0;
+        for (let i = 0; i < 9; i++) {
+            const square = document.getElementById(`box${i}`);
+            square.textContent = '';
+            square.classList.remove('winDiagonalReverse', 'winDiagonal', 'win', 'winVertical');
+            square.classList.add('pointer');
+            square.style.pointerEvents = 'auto';
+        }
+        winnerContainer.classList.add('hidden');
+        buttonContainer.classList.add('hidden');
+        winnerDiv.textContent = '';
+        overlay.classList.add('hidden');
+        loader.classList.remove('hidden');
+    }, 100);
+    setTimeout(() => {
+        choiceContainer.classList.remove('hidden');
+    }, 600);
+
 });
 
 
